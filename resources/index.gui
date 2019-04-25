@@ -1,0 +1,19 @@
+<svg class="background">
+  
+  
+  <text id="blockOff" class="timeHolder" />
+  <text id="takeOff"  class="timeHolder" />
+  <text id="landing"  class="timeHolder" />
+  <text id="blockOn"  class="timeHolder" />
+  
+  <text id="nextTime" />
+  
+  <text id="stopWatch" />
+  
+  <text id="clockLable"  class="timeHolder" />
+  <text id="dateLable" />
+  
+  <rect id="myButton" width="100%" height="100%"
+        fill="green" pointer-events="visible" opacity="0" />
+  
+</svg>

@@ -1,0 +1,68 @@
+.background {
+  viewport-fill: blue;
+}
+
+#blockOff {
+  x: 5%;
+  y: 10%;
+}
+
+#takeOff {
+  x: 60%;
+  y: 10%;
+}
+
+#landing {
+  x: 5%;
+  y: 95%
+}
+
+#blockOn {
+  x: 60%;
+  y: 95%;
+}
+
+.timeHolder {
+  font-size: 30;
+  text-length: 10;
+}
+
+#nextTime {
+  font-size: 30;
+  text-length: 40;
+  text-anchor: middle;
+  x: 50%;
+  y: 37%;
+}
+
+
+#clockLable {
+  font-size: 70;
+  font-family: System-Bold;
+  text-length: 20;
+  text-anchor: middle;
+  x: 50%;
+  y: 50%+30;
+  fill: white;
+}
+
+#dateLable {
+  font-size: 30;
+  font-family: System-Bold;
+  text-length: 20;
+  text-anchor: middle;
+  x: 50%;
+  y: 50%+60;
+  fill: white;
+}
+
+
+#stopWatch {
+  font-size: 90;
+  text-length: 40;
+  text-anchor: middle;
+  x: 50%;
+  y: 50%+20;
+  fill: white;
+}
+
