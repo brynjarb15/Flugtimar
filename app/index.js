@@ -36,6 +36,9 @@ let blockOnTime = 0;
 let showStopwatch;
 let stopwatchStartTime;
 
+// Create y and x variable used to sence swiping
+let y = 0;
+let x = 0;
 
 // Takes in time on format hh:mm gives out time at as number with 1 decimal
 // E.g. 10:30 => 10.5
@@ -160,8 +163,29 @@ function writeTimesToFile() {
   fs.writeFileSync("db.txt", jsonFlightTimes, "json");
 }
 
+
+// Track the inital position of mouse down
+myButton.onmousedown = function(evt) {
+  y = evt.screenY;
+  x = evt.screenX;
+}
+
 // When myButton is pressed(which covers the whole screen) then next time is issued
-myButton.onmousedown = function (evt) {
+myButton.onmouseup = function (evt) {
+  let yMove = evt.screenY - y;
+  let xMove = evt.screenX - x;
+  if (xMove > 60) {
+    if (showStopwatch) {
+      showStopwatch = false;
+      showFlightTimes();
+    } else {
+      showStopwatch = true;
+      stopwatchStartTime = new Date();
+      showOnlyStopWatch();
+    }
+    return;
+  }
+  
   // If we are showing the stopwatch nothing should happen
   if (showStopwatch) {
     return;
@@ -242,14 +266,7 @@ document.onkeypress = function (e) {
   }
 
   if (e.key === 'down') {
-    if (showStopwatch) {
-      showStopwatch = false;
-      showFlightTimes();
-    } else {
-      showStopwatch = true;
-      stopwatchStartTime = new Date();
-      showOnlyStopWatch();
-    }
+    console.log('Down key was pressed');
   }
 }
 
@@ -264,8 +281,7 @@ clock.ontick = (evt) => {
     let secs = util.zeroPad(timePassed.getSeconds());
     let mins = util.zeroPad(timePassed.getMinutes());
     let hours = util.zeroPad(timePassed.getHours());
-
-    if (hours === 0) {
+    if (hours === '00') {
       stopwatchLabel.text = `${mins}:${secs}`;
     } else {
       stopwatchLabel.text = `${hours}:${mins}:${secs}`;
