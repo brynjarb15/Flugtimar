@@ -19,6 +19,7 @@ const nextTimeLabel = document.getElementById("nextTime");
 const flightTimeLabel = document.getElementById("flightTimeLabel");
 const blockTimeLabel = document.getElementById("blockTimeLabel");
 const stopwatchLabel = document.getElementById("stopWatch");
+const numberOfLandingsLabel = document.getElementById("numberOfLandingsLabel");
 
 // Get the time labels
 const blockOffLabel = document.getElementById("blockOff");
@@ -31,6 +32,7 @@ let blockOffTime = 0;
 let takeOffTime = 0;
 let landingTime = 0;
 let blockOnTime = 0;
+let numberOfLandings = 0;
 
 // Create the stopwatch variables
 let showStopwatch;
@@ -88,6 +90,7 @@ function initalizeData() {
   takeOffTime = 0;
   landingTime = 0;
   blockOnTime = 0;
+  numberOfLandings = 0;
   blockOffLabel.text = '';
   takeOffLabel.text = '';
   landingLabel.text = '';
@@ -96,7 +99,7 @@ function initalizeData() {
   blockTimeLabel.text = '';
   nextTimeLabel.text = 'BLOCKS OFF';
   showStopwatch = false;
-
+  updateLandingLabel();
 }
 initalizeData();
 
@@ -110,6 +113,7 @@ try {
   takeOffTime = jsonFlightTimes.takeOff;
   landingTime = jsonFlightTimes.landing;
   blockOnTime = jsonFlightTimes.onBlock;
+  numberOfLandings = jsonFlightTimes.numberOfLandings;
   // Show the current times
   showFlightTimes();
 } catch {
@@ -128,13 +132,20 @@ function showOnlyStopWatch() {
   blockTimeLabel.text = '';
 }
 
+// Update the number of landings label
+function updateLandingLabel() {
+  numberOfLandingsLabel.text = 'L: ' + numberOfLandings ;
+}
+
 // Show all the flight times
 function showFlightTimes() {
+  updateLandingLabel();
   stopwatchLabel.text = '';
   if (blockOffTime !== 0) {
     blockOffLabel.text = blockOffTime;
     nextTimeLabel.text = 'TAKE OFF';
   } else {
+    // If there is no block time there are no times and therefore we initalize everything
     initalizeData();
   }
 
@@ -158,9 +169,14 @@ function writeTimesToFile() {
     "offBlock": blockOffTime,
     "takeOff": takeOffTime,
     "landing": landingTime,
-    "onBlock": blockOnTime
+    "onBlock": blockOnTime,
+    "numberOfLandings": numberOfLandings
   };
   fs.writeFileSync("db.txt", jsonFlightTimes, "json");
+}
+
+function createTimeLabel(hours, minutes, seconds) {
+  return `${hours}:${minutes}:${seconds}`
 }
 
 
@@ -174,7 +190,7 @@ myButton.onmousedown = function(evt) {
 myButton.onmouseup = function (evt) {
   let yMove = evt.screenY - y;
   let xMove = evt.screenX - x;
-  if (xMove > 60) {
+  if (xMove > 60 || xMove < -60) {
     if (showStopwatch) {
       showStopwatch = false;
       showFlightTimes();
@@ -200,25 +216,18 @@ myButton.onmouseup = function (evt) {
   // If the time is 0 then it has not been entered yet
   // Go through all the times and the first one to be 0 will be the new time entered
   if (blockOffTime === 0) {
-    blockOffTime = `${hours}:${minutes}:${seconds}`;
-    blockOffLabel.text = blockOffTime;
-    nextTimeLabel.text = 'TAKE OFF';
+    blockOffTime = createTimeLabel(hours, minutes, seconds);
   } else if (takeOffTime === 0) {
-    takeOffTime = `${hours}:${minutes}:${seconds}`;
-    takeOffLabel.text = takeOffTime;
-    nextTimeLabel.text = 'LANDING';
+    takeOffTime = createTimeLabel(hours, minutes, seconds);
   } else if (landingTime === 0) {
-    landingTime = `${hours}:${minutes}:${seconds}`;
-    landingLabel.text = landingTime;
-    nextTimeLabel.text = 'BLOCKS ON';
+    landingTime = createTimeLabel(hours, minutes, seconds);
   } else if (blockOnTime === 0) {
-    blockOnTime = `${hours}:${minutes}:${seconds}`;
-    blockOnLabel.text = blockOnTime;
-    showBlockAndFlightTime();
+    blockOnTime = createTimeLabel(hours, minutes, seconds);
   } else {
     initalizeData();
     return;
   }
+  showFlightTimes();
   // Write down the new times to file
   writeTimesToFile();
 }
@@ -265,8 +274,10 @@ document.onkeypress = function (e) {
     }
   }
 
+  // If the down key is pressed we add 1 landing
   if (e.key === 'down') {
-    console.log('Down key was pressed');
+    numberOfLandings += 1;
+    updateLandingLabel();  
   }
 }
 
