@@ -2,7 +2,7 @@
   "fitbit": {
     "appUUID": "03e4e4c5-faca-4a40-81c9-c7f740721692",
     "appType": "app",
-    "appDisplayName": "Flugtímar",
+    "appDisplayName": "Flight time tracker",
     "iconFile": "resources/icon.png",
     "wipeColor": "#3f51b5",
     "requestedPermissions": [
@@ -13,7 +13,7 @@
     ],
     "i18n": {
       "en": {
-        "name": "Flugtímar"
+        "name": "Flight time tracker"
       }
     },
     "defaultLanguage": "en-US"

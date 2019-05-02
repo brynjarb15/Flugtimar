@@ -36,7 +36,7 @@
 }
 
 
-#clockLable {
+#clockLabel {
   font-size: 70;
   font-family: System-Bold;
   text-length: 20;
@@ -46,7 +46,7 @@
   fill: white;
 }
 
-#dateLable {
+#dateLabel {
   font-size: 30;
   font-family: System-Bold;
   text-length: 20;
@@ -56,6 +56,29 @@
   fill: white;
 }
 
+#flightTimeLabel {
+  text-anchor: middle;
+  x: 50%;
+  y: 37%;
+  text-length: 20;
+}
+
+#blockTimeLabel {
+  text-anchor: middle;
+  x: 50%;
+  y: 27%;
+  text-length: 20;
+}
+
+#numberOfLandingsLabel {
+  font-size: 30;
+  font-family: System-Bold;
+  text-length: 20;
+  text-anchor: middle;
+  x: 82%;
+  y: 82%;
+  fill: black;
+}
 
 #stopWatch {
   font-size: 90;

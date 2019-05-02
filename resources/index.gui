@@ -6,12 +6,16 @@
   <text id="landing"  class="timeHolder" />
   <text id="blockOn"  class="timeHolder" />
   
+  <text id="numberOfLandingsLabel" />
+  
   <text id="nextTime" />
+  <text id="flightTimeLabel" />
+  <text id="blockTimeLabel" />
   
   <text id="stopWatch" />
   
-  <text id="clockLable"  class="timeHolder" />
-  <text id="dateLable" />
+  <text id="clockLabel"  class="timeHolder" />
+  <text id="dateLabel" />
   
   <rect id="myButton" width="100%" height="100%"
         fill="green" pointer-events="visible" opacity="0" />
